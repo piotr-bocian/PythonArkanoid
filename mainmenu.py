@@ -1,6 +1,5 @@
 import pygame
 import sys
-import pygame.freetype  # Import the freetype module.
 from Classes.Menu import Menu
 from Classes.HallOfFame import HallOfFame
 from Classes.Options import Options
@@ -10,7 +9,6 @@ hof = HallOfFame()
 options = Options()
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
-GAME_FONT = pygame.freetype.SysFont("Comic Sans MS", 24)
 running = True
 
 while running:
