@@ -1,4 +1,5 @@
 import pygame
+from random import random
 
 
 class Ball:
@@ -12,6 +13,13 @@ class Ball:
     def move(self):
         self.x += self.x_speed
         self.y += self.y_speed
+
+    def shoot(self):
+        self.x_speed = random()*.1
+        self.y_speed = 1-self.x_speed
+
+    def follow_paddle(self,paddle):
+        self.x = (2 * paddle.x + paddle.width) / 2
 
     def draw(self, screen):
         pygame.draw.circle(screen, (0, 150, 255), (self.x, self.y), self.radius)
@@ -34,4 +42,9 @@ class Ball:
             self.x_speed *= -1
             return True
         return False
+
+    def check_hit_shield(self):
+        if self.y>=710:
+            self.y_speed *=1
+            return True
 

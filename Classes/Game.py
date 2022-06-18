@@ -1,12 +1,23 @@
 import pygame
 
-from Classes.Paddle import Paddle
-from Classes.Ball import Ball
-from Classes.Level import Level
-from Classes.Brick import Brick
-from Classes.Bricks import Bricks
-from Classes.LeftScreen import Score
-from Classes.Shield import Shield
 
-class Game():
+class Game:
     def __init__(self):
+        self.lives = 3
+        self.finished = False
+        self.points = 0
+        self.levels = []
+
+    def add_life(self):
+        self.lives += 1
+
+    def sub_life(self):
+        self.lives -= 1
+
+    def check_if_end(self):
+        if self.lives == 0:
+            self.finished = True
+
+    def add_level_points(self,level):
+        self.points += level.points
+
