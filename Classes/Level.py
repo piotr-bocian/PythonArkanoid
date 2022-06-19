@@ -8,6 +8,7 @@ from Classes.LeftScreen import Score
 from Classes.Shield import Shield
 from Classes.PowerUp import PowerUp
 import random
+import time
 
 
 class Level:
@@ -20,7 +21,7 @@ class Level:
         self.ball = Ball((2 * self.paddle.x + self.paddle.width) / 2, self.paddle.y - 20)
         self.bricks = Bricks()
         self.score = Score()
-        self.pu = PowerUp(640,200)
+        self.pu = PowerUp(640, 200)
         self.shield = False
 
     def check_if_finished(self):
@@ -34,7 +35,7 @@ class Level:
             return
         self.pause = True
 
-    def level_setup(self,screen):
+    def level_setup(self, screen):
 
         # for i in range(11):
         #     self.bricks.add_brick(220 + 95 * i, 70)
@@ -49,8 +50,7 @@ class Level:
         pygame.display.flip()
         self.score.display(screen)
 
-
-    def game_loop(self,screen):
+    def game_loop(self, screen):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit(0)
@@ -103,6 +103,10 @@ class Level:
                 self.ball.move()
                 self.ball.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width)
                 self.ball.check_hit_wall()
+
+                if self.pu.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width):
+                    self.pu.effect(self.ball)
+
                 # for brick in self.bricks.bricks_array:
                 #     if self.ball.check_hit_brick(brick.x, brick.y, brick.width, brick.height):
                 #         self.score.score += brick.points
