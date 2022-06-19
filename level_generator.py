@@ -1,12 +1,14 @@
 import random
+import math
 
-def level_generator():
-    row = [None]*11
-    bricks = [row]*6
-    for i in range(5):
-        for j in range(6):
-            bricks[i][j] = random.randint(0,1)
-            bricks[i][-j] = bricks[i][j]
-    return bricks
+def pattern_generator():
+    row = [None] * 11
+    pattern = [row] * 6
+    for i in range(len(pattern)):
+        for j in range(math.floor(len(row)/2)+1):
+            pattern[i][j] = random.randint(0, 1)
+            pattern[i][10-j] = pattern[i][j]
+    return pattern
 
-print(level_generator())
+print(pattern_generator())
+
