@@ -6,6 +6,7 @@ from Classes.Brick import Brick
 from Classes.Bricks import Bricks
 from Classes.LeftScreen import Score
 from Classes.Shield import Shield
+from Classes.LivesDisplay import LivesDisplay
 import random
 
 
@@ -20,6 +21,7 @@ class Level:
         self.bricks = Bricks()
         self.score = Score()
         self.shield = False
+        self.lives = LivesDisplay()
 
     def check_if_finished(self):
         if len(self.bricks.bricks_array) == 0:
@@ -46,6 +48,7 @@ class Level:
         self.bricks.draw(screen)
         pygame.display.flip()
         self.score.display(screen)
+        self.lives.display(screen)
 
 
     def game_loop(self,screen):
@@ -70,6 +73,7 @@ class Level:
             self.ball.draw(screen)
             self.bricks.draw(screen)
             self.score.display(screen)
+            self.lives.display(screen)
             pygame.display.flip()
 
             if keys[pygame.K_d]:
@@ -95,6 +99,7 @@ class Level:
                 self.ball.draw(screen)
                 self.bricks.draw(screen)
                 self.score.display(screen)
+                self.lives.display(screen)
                 self.check_if_finished()
                 self.ball.move()
                 self.ball.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width)

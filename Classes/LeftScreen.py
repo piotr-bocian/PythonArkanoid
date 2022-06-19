@@ -21,4 +21,6 @@ class Score:
         screen.blit(text_surface, text_rect)
 
     def display(self, screen):
-        self.draw_text("Score: {}".format(self.show()), 10, 20,20, screen)
+        self.draw_text("Score".format(self.show()), 20, 90,40, screen)
+        self.draw_text("{}".format(self.show()), 20, 90, 80, screen)
+
