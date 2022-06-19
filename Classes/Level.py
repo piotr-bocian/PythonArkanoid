@@ -6,6 +6,7 @@ from Classes.Brick import Brick
 from Classes.Bricks import Bricks
 from Classes.LeftScreen import Score
 from Classes.Shield import Shield
+from Classes.PowerUp import PowerUp
 import random
 
 
@@ -19,6 +20,7 @@ class Level:
         self.ball = Ball((2 * self.paddle.x + self.paddle.width) / 2, self.paddle.y - 20)
         self.bricks = Bricks()
         self.score = Score()
+        self.pu = PowerUp(640,200)
         self.shield = False
 
     def check_if_finished(self):
@@ -36,14 +38,14 @@ class Level:
 
         # for i in range(11):
         #     self.bricks.add_brick(220 + 95 * i, 70)
-        self.bricks.pattern_generator()
-        self.bricks.create_bricks_from_pattern()
+        # self.bricks.pattern_generator()
+        # self.bricks.create_bricks_from_pattern()
         screen.fill((0, 0, 0))
         pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
         self.paddle.draw(screen)
         self.ball.shoot()
         self.ball.draw(screen)
-        self.bricks.draw(screen)
+        # self.bricks.draw(screen)
         pygame.display.flip()
         self.score.display(screen)
 
@@ -68,7 +70,7 @@ class Level:
             pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
             self.paddle.draw(screen)
             self.ball.draw(screen)
-            self.bricks.draw(screen)
+            # self.bricks.draw(screen)
             self.score.display(screen)
             pygame.display.flip()
 
@@ -93,19 +95,21 @@ class Level:
                 pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
                 self.paddle.draw(screen)
                 self.ball.draw(screen)
-                self.bricks.draw(screen)
+                self.pu.draw(screen)
+                self.pu.fall()
+                # self.bricks.draw(screen)
                 self.score.display(screen)
-                self.check_if_finished()
+                # self.check_if_finished()
                 self.ball.move()
                 self.ball.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width)
                 self.ball.check_hit_wall()
-                for brick in self.bricks.bricks_array:
-                    if self.ball.check_hit_brick(brick.x, brick.y, brick.width, brick.height):
-                        self.score.score += brick.points
-                        self.bricks.bricks_array.remove(brick)
-                        print(self.points)
-                if self.shield:
-                    self.ball.check_hit_shield()
+                # for brick in self.bricks.bricks_array:
+                #     if self.ball.check_hit_brick(brick.x, brick.y, brick.width, brick.height):
+                #         self.score.score += brick.points
+                #         self.bricks.bricks_array.remove(brick)
+                #         print(self.points)
+                # if self.shield:
+                #     self.ball.check_hit_shield()
                 pygame.display.flip()
 
                 if keys[pygame.K_d]:
