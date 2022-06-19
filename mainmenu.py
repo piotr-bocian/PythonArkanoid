@@ -24,7 +24,7 @@ while running:
                     menu.move_cursor_down()
                 elif event.key == pygame.K_w or event.key == pygame.K_UP:
                     menu.move_cursor_up()
-                elif event.key == pygame.K_RETURN:
+                elif event.key == pygame.K_RETURN or pygame.K_SPACE:
                     if menu.state == 2:
                         menu.run_display = False
                         options.run_display = True
@@ -40,7 +40,7 @@ while running:
             if event.type == pygame.QUIT:
                 sys.exit(0)
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+                if event.key == pygame.K_ESCAPE or pygame.K_SPACE:
                     menu.run_display = True
                     hof.run_display = False
     elif options.run_display:
@@ -49,7 +49,7 @@ while running:
             if event.type == pygame.QUIT:
                 sys.exit(0)
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
+                if event.key == pygame.K_ESCAPE or pygame.K_SPACE:
                     menu.run_display = True
                     hof.run_display = False
     pygame.display.flip()
