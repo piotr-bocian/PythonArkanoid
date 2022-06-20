@@ -14,6 +14,9 @@ class LivesDisplay(Display):
     def show(self):
         return self.lives
 
+    def sub_lives(self):
+        self.lives -= 1
+
     def display(self, screen):
         self.draw_text("Lives".format(self.show()), 20, 90, self.y, screen)
         self.draw_text("{}".format(self.show()), 20, 90, self.y+40, screen)

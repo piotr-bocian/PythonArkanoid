@@ -52,7 +52,7 @@ class PowerUp:
                 self.add_life(lives)
 
     def stretch_paddle(self, paddle):
-
+        global start
         if not self.hit:
             start = time.time()
             paddle.width += 80

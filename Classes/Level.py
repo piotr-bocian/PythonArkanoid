@@ -115,7 +115,8 @@ class Level:
                     self.ball.check_hit_wall()
 
                     if self.ball.check_if_fallen():
-                        self.lives.lives -= 1
+                        self.lives -= 1
+                        self.lscreen.lives.sub_lives()
                         self.paddle.x = 640
                         self.ball.x = 700
                         self.ball.y = self.paddle.y - 20
