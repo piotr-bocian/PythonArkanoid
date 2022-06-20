@@ -7,16 +7,16 @@ class Ball:
         self.x = x
         self.y = y
         self.radius = 12
-        self.x_speed = 0.25
-        self.y_speed = 0.25
+        self.x_speed = 0
+        self.y_speed = 0
 
     def move(self):
         self.x += self.x_speed
         self.y += self.y_speed
 
     def shoot(self):
-        self.x_speed = random()*.1
-        self.y_speed = 1-self.x_speed
+        self.x_speed = 0
+        self.y_speed = .4
 
     def follow_paddle(self,paddle):
         self.x = (2 * paddle.x + paddle.width) / 2
