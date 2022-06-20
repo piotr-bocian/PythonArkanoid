@@ -5,15 +5,16 @@ import time
 
 
 class PowerUp:
-    def __init__(self, x, y):
+    def __init__(self, x, y,time):
         self.x = x
         self.y = y
         self.radius = 18
         self.speed = .3
         self.used = False
         self.hit = False
-        self.type = 4
-
+        self.type = 1
+        self.time = time
+        self.timeout = 0
     def fall(self):
         self.y += self.speed
 
@@ -22,6 +23,9 @@ class PowerUp:
 
     def effect(self, object):
         if not self.used:
+            self.x = 90
+            self.y = 200
+            self.speed = 0
             if self.type == 1:
                 self.stretch_paddle(object)
             elif self.type == 2:
@@ -32,16 +36,15 @@ class PowerUp:
                 self.speed_ball_down(object)
 
     def stretch_paddle(self, paddle):
-        global timeout, start
+        global start
         if not self.hit:
             start = time.time()
-            timeout = 0
             paddle.width += 80
             self.hit = True
         lap = time.time()
-        timeout += lap - start
+        self.timeout += lap - start
         start = lap
-        if timeout >= 10:
+        if self.timeout >= self.time:
             paddle.width = 120
             self.used = True
 
@@ -76,25 +79,24 @@ class PowerUp:
             self.used = True
 
     def speed_ball_down(self, ball):
-        global timeout, start
+        global start
         if not self.hit:
             start = time.time()
-            timeout = 0
             ball.x_speed /= 2
             ball.y_speed /= 2
             self.hit = True
         lap = time.time()
-        timeout += lap - start
+        self.timeout += lap - start
         start = lap
-        if timeout >= 5:
+        if self.timeout >= self.time:
             ball.x_speed *= 2
             ball.y_speed *= 2
             self.used = True
 
-    def clear(self, paddle):
-        paddle.width = 120
-        self.used = True
-
     def check_hit_paddle(self, x, y, width):
         if x <= self.x <= x + width and self.y + self.radius >= y:
             return True
+
+
+
+

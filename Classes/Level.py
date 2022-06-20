@@ -7,6 +7,7 @@ from Classes.Bricks import Bricks
 from Classes.LeftScreen import Score
 from Classes.Shield import Shield
 from Classes.PowerUp import PowerUp
+from math import pi
 import random
 import time
 
@@ -21,7 +22,7 @@ class Level:
         self.ball = Ball((2 * self.paddle.x + self.paddle.width) / 2, self.paddle.y - 20)
         self.bricks = Bricks()
         self.score = Score()
-        self.pu = PowerUp(640, 200)
+        self.pu = PowerUp(640, 200,2)
         self.shield = False
 
     def check_if_finished(self):
@@ -34,6 +35,11 @@ class Level:
             print(self.pause)
             return
         self.pause = True
+
+    def draw_countdown(self, screen, x,y,w,h):
+        time = 2*pi/self.pu.time*(self.pu.time-self.pu.timeout)
+        pygame.draw.arc(screen,(255,255,255),[x,y,w,h],0,time,6)
+
 
     def level_setup(self, screen):
 
@@ -95,7 +101,8 @@ class Level:
                 pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
                 self.paddle.draw(screen)
                 self.ball.draw(screen)
-                self.pu.draw(screen)
+                if not self.pu.used:
+                    self.pu.draw(screen)
                 self.pu.fall()
                 # self.bricks.draw(screen)
                 self.score.display(screen)
@@ -105,15 +112,12 @@ class Level:
                 self.ball.check_hit_wall()
 
                 if self.pu.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width):
-                    self.pu.effect(self.ball)
+                    self.pu.effect(self.paddle)
+                if self.pu.hit and not self.pu.used:
+                    self.pu.effect(self.paddle)
+                    self.draw_countdown(screen, self.pu.x-self.pu.radius-12,self.pu.y-self.pu.radius-12,
+                                        2*self.pu.radius+24,2*self.pu.radius+24)
 
-                # for brick in self.bricks.bricks_array:
-                #     if self.ball.check_hit_brick(brick.x, brick.y, brick.width, brick.height):
-                #         self.score.score += brick.points
-                #         self.bricks.bricks_array.remove(brick)
-                #         print(self.points)
-                # if self.shield:
-                #     self.ball.check_hit_shield()
                 pygame.display.flip()
 
                 if keys[pygame.K_d]:
