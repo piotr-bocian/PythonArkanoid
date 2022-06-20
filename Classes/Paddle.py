@@ -7,7 +7,21 @@ class Paddle:
         self.y = y
         self.width = 120
         self.height = 12
-        self.speed = .3
+        self.speed = .7
+        self.friction = 0.9
+        self.acceleration = 2
+        self.velocity = 0
+
+    def move(self):
+        if self.velocity < self.speed:
+            self.velocity += self.acceleration
+            print(self.velocity)
+
+        if self.velocity > -self.speed:
+            self.velocity -= self.acceleration
+
+        self.velocity *= self.friction
+        self.x += self.velocity
 
     def move_right(self):
         if self.x + self.width < 1280:
