@@ -1,5 +1,5 @@
 import pygame
-
+import random
 
 class Brick:
     def __init__(self, x, y) -> object:
@@ -12,3 +12,15 @@ class Brick:
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.color, pygame.Rect(self.x, self.y, self.width, self.height))
+
+    def is_powerUp(self):
+        x = random.random()
+        if x<=0.1:
+            x = 0
+            return True
+        return False
+
+    def pick_powerUp(self):
+        x = random.randint(1,4)
+        return x
+

@@ -22,7 +22,7 @@ class Level:
         self.ball = Ball((2 * self.paddle.x + self.paddle.width) / 2, self.paddle.y - 20)
         self.bricks = Bricks()
         self.score = Score()
-        self.pu = PowerUp(640, 200,2)
+        self.pu = None
         self.shield = False
 
     def check_if_finished(self):
@@ -52,6 +52,7 @@ class Level:
         self.paddle.draw(screen)
         self.ball.shoot()
         self.ball.draw(screen)
+        self.bricks.add_brick(700,100)
         # self.bricks.draw(screen)
         pygame.display.flip()
         self.score.display(screen)
@@ -101,22 +102,28 @@ class Level:
                 pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
                 self.paddle.draw(screen)
                 self.ball.draw(screen)
-                if not self.pu.used:
-                    self.pu.draw(screen)
-                self.pu.fall()
-                # self.bricks.draw(screen)
+                if self.pu:
+                    if not self.pu.used:
+                        self.pu.draw(screen)
+                        self.pu.fall()
+                self.bricks.draw(screen)
                 self.score.display(screen)
                 # self.check_if_finished()
                 self.ball.move()
                 self.ball.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width)
                 self.ball.check_hit_wall()
+                if not self.pu and self.ball.check_hit_brick(self.bricks.bricks_array[0].x,self.bricks.bricks_array[0].y,self.bricks.bricks_array[0].width,self.bricks.bricks_array[0].height):
+                    self.pu = PowerUp(self.bricks.bricks_array[0].x,self.bricks.bricks_array[0].y,5,self.bricks.bricks_array[0].pick_powerUp())
 
-                if self.pu.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width):
-                    self.pu.effect(self.paddle)
-                if self.pu.hit and not self.pu.used:
-                    self.pu.effect(self.paddle)
-                    self.draw_countdown(screen, self.pu.x-self.pu.radius-12,self.pu.y-self.pu.radius-12,
-                                        2*self.pu.radius+24,2*self.pu.radius+24)
+                if self.pu:
+                    if self.pu.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width):
+                        self.pu.effect(self.paddle,self.ball)
+                    if self.pu.hit and not self.pu.used:
+                        self.pu.effect(self.paddle,self.ball)
+                        self.draw_countdown(screen, self.pu.x-self.pu.radius-12,self.pu.y-self.pu.radius-12,
+                                            2*self.pu.radius+24,2*self.pu.radius+24)
+                    if self.pu.used:
+                        self.pu = None
 
                 pygame.display.flip()
 
