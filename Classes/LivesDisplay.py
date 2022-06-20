@@ -19,5 +19,5 @@ class LivesDisplay:
         screen.blit(text_surface, text_rect)
 
     def display(self, screen):
-        self.draw_text("Lives".format(self.show()), 20, 90,120, screen)
-        self.draw_text("{}".format(self.show()), 20, 90, 160, screen)
+        self.draw_text("Lives".format(self.show()), 20, 90,200, screen)
+        self.draw_text("{}".format(self.show()), 20, 90, 240, screen)

@@ -15,12 +15,13 @@ class Brick:
 
     def is_powerUp(self):
         x = random.random()
-        if x<=0.1:
+        if x<=0.5 or True:
             x = 0
             return True
         return False
 
     def pick_powerUp(self):
+        x = 0
         x = random.randint(1,4)
         return x
 

@@ -15,10 +15,10 @@ class Ball:
         self.y += self.y_speed
 
     def shoot(self):
-        self.x_speed = 0
-        self.y_speed = .4
+        self.x_speed = random()*2-1 * .7
+        self.y_speed = .7 - self.x_speed ** 2
 
-    def follow_paddle(self,paddle):
+    def follow_paddle(self, paddle):
         self.x = (2 * paddle.x + paddle.width) / 2
 
     def draw(self, screen):
@@ -34,11 +34,13 @@ class Ball:
         if self.y - self.radius <= 0:
             self.y_speed *= -1
 
-    def check_hit_brick(self,x,y,width,height):
-        if x <= self.x <= x + width and (y >= self.y - self.radius >= y- height or y >= self.y + self.radius >= y - height):
+    def check_hit_brick(self, x, y, width, height):
+        if x <= self.x <= x + width and (
+                y >= self.y - self.radius >= y - height or y >= self.y + self.radius >= y - height):
             self.y_speed *= -1
             return True
-        if y - height <= self.y <= y and (x <= self.x + self.radius <= x +width or x + width >= self.x - self.radius >= x ):
+        if y - height <= self.y <= y and (
+                x <= self.x + self.radius <= x + width or x + width >= self.x - self.radius >= x):
             self.x_speed *= -1
             return True
         return False
@@ -49,7 +51,6 @@ class Ball:
             return True
 
     def check_hit_shield(self):
-        if self.y>=710:
-            self.y_speed *=1
+        if self.y >= 710:
+            self.y_speed *= 1
             return True
-

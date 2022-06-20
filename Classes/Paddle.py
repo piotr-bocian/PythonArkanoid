@@ -7,7 +7,7 @@ class Paddle:
         self.y = y
         self.width = 120
         self.height = 12
-        self.speed = .3
+        self.speed = .7
         self.friction = 0.9
         self.acceleration = 2
         self.velocity = 0
