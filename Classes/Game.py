@@ -3,7 +3,7 @@ import pygame
 
 class Game:
     def __init__(self):
-        self.lives = 3
+        self.lives = 30
         self.finished = False
         self.points = 0
         self.levels = []

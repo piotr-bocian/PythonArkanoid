@@ -11,9 +11,10 @@ import random
 
 
 class Level:
-    def __init__(self):
+    def __init__(self,livescount):
         self.initial = True
         self.finished = False
+        self.failed = False
         self.pause = False
         self.points = 0
         self.paddle = Paddle(640, 680)
@@ -21,7 +22,7 @@ class Level:
         self.bricks = Bricks()
         self.score = Score()
         self.shield = False
-        self.lives = LivesDisplay()
+        self.lives = LivesDisplay(livescount)
 
     def check_if_finished(self):
         if len(self.bricks.bricks_array) == 0:
@@ -55,11 +56,8 @@ class Level:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit(0)
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                self.initial = False
-        keys = pygame.key.get_pressed()
 
-        while self.initial:
+        while not self.failed:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(0)
@@ -67,32 +65,15 @@ class Level:
                     self.initial = False
             keys = pygame.key.get_pressed()
 
-            screen.fill((0, 0, 0))
-            pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
-            self.paddle.draw(screen)
-            self.ball.draw(screen)
-            self.bricks.draw(screen)
-            self.score.display(screen)
-            self.lives.display(screen)
-            pygame.display.flip()
+            while self.initial:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit(0)
+                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                        self.initial = False
+                        self.finished = False
+                keys = pygame.key.get_pressed()
 
-            if keys[pygame.K_d]:
-                self.paddle.move_right()
-                self.ball.follow_paddle(self.paddle)
-            if keys[pygame.K_a]:
-                self.paddle.move_left()
-                self.ball.follow_paddle(self.paddle)
-
-        while not self.finished:
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit(0)
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    self.toggle_pause()
-            keys = pygame.key.get_pressed()
-
-            if not self.pause:
                 screen.fill((0, 0, 0))
                 pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
                 self.paddle.draw(screen)
@@ -100,20 +81,53 @@ class Level:
                 self.bricks.draw(screen)
                 self.score.display(screen)
                 self.lives.display(screen)
-                self.check_if_finished()
-                self.ball.move()
-                self.ball.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width)
-                self.ball.check_hit_wall()
-                for brick in self.bricks.bricks_array:
-                    if self.ball.check_hit_brick(brick.x, brick.y, brick.width, brick.height):
-                        self.score.score += brick.points
-                        self.bricks.bricks_array.remove(brick)
-                        print(self.points)
-                if self.shield:
-                    self.ball.check_hit_shield()
                 pygame.display.flip()
 
                 if keys[pygame.K_d]:
                     self.paddle.move_right()
+                    self.ball.follow_paddle(self.paddle)
                 if keys[pygame.K_a]:
                     self.paddle.move_left()
+                    self.ball.follow_paddle(self.paddle)
+
+            while not self.finished:
+
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit(0)
+                    elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                        self.toggle_pause()
+                keys = pygame.key.get_pressed()
+
+                if not self.pause:
+                    screen.fill((0, 0, 0))
+                    pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
+                    self.paddle.draw(screen)
+                    self.ball.draw(screen)
+                    self.bricks.draw(screen)
+                    self.score.display(screen)
+                    self.lives.display(screen)
+                    self.check_if_finished()
+                    self.ball.move()
+                    self.ball.check_hit_paddle(self.paddle.x, self.paddle.y, self.paddle.width)
+                    self.ball.check_hit_wall()
+                    if self.ball.check_if_fallen():
+                        self.lives.lives -= 1
+                        self.paddle.x = 640
+                        self.ball.x = 700
+                        self.ball.y = self.paddle.y - 20
+                        self.initial = True
+                        self.finished = True
+                    for brick in self.bricks.bricks_array:
+                        if self.ball.check_hit_brick(brick.x, brick.y, brick.width, brick.height):
+                            self.score.score += brick.points
+                            self.bricks.bricks_array.remove(brick)
+                            print(self.points)
+                    if self.shield:
+                        self.ball.check_hit_shield()
+                    pygame.display.flip()
+
+                    if keys[pygame.K_d]:
+                        self.paddle.move_right()
+                    if keys[pygame.K_a]:
+                        self.paddle.move_left()

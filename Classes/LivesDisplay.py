@@ -4,8 +4,8 @@ import pygame.freetype
 pygame.init()
 
 class LivesDisplay:
-    def __init__(self):
-        self.lives = 3
+    def __init__(self,lives):
+        self.lives = lives
         self.font_name = "assets/8-BIT WONDER.TTF"
 
     def show(self):

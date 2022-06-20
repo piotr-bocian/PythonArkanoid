@@ -43,6 +43,11 @@ class Ball:
             return True
         return False
 
+    def check_if_fallen(self):
+        if self.y > 720:
+            print("przegrales")
+            return True
+
     def check_hit_shield(self):
         if self.y>=710:
             self.y_speed *=1
