@@ -26,11 +26,11 @@ class PowerUp:
 
     def map_type_to_color(self):
         if self.type == 1 or self.type == 4:
-            return (0, 255, 0)
+            return 0, 255, 0
         elif self.type == 2 or self.type == 3:
-            return (255, 0, 0)
+            return 255, 0, 0
         elif self.type == 5:
-            return (255, 51, 204)
+            return 255, 51, 204
 
     def draw(self, screen):
         pygame.draw.circle(screen, self.map_type_to_color(), (self.x, self.y), self.radius)
@@ -52,7 +52,7 @@ class PowerUp:
                 self.add_life(lives)
 
     def stretch_paddle(self, paddle):
-        global start
+
         if not self.hit:
             start = time.time()
             paddle.width += 80

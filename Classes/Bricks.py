@@ -32,7 +32,6 @@ class Bricks:
                 x = random.randint(0, 1)
                 self.pattern[i][j] = x
                 self.pattern[i][10 - j] = self.pattern[i][j]
-
         return self.pattern
 
     def create_bricks_from_pattern(self):
@@ -41,12 +40,5 @@ class Bricks:
                 if self.pattern[i][j] == 1:
                     cords = self.map_index_to_cords(i, j)
                     self.add_brick(cords[0], cords[1])
-                    # self.add_brick(cords[0],cords[1])
         return self.bricks_array
 
-
-bricks = Bricks()
-bricks.pattern_generator()
-print(bricks.pattern)
-bricks.create_bricks_from_pattern()
-print(bricks.bricks_array)

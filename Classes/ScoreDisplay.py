@@ -1,18 +1,22 @@
 import pygame
 import pygame.freetype
 from Classes.Display import Display
+
 pygame.init()
 
 
-class LevelDisplay(Display):
-    def __init__(self, level, y):
+class ScoreDisplay(Display):
+    def __init__(self, y):
         super().__init__(y)
-        self.level = level
+        self.score = 0
         self.font_name = "assets/8-BIT WONDER.TTF"
 
     def show(self):
-        return self.level
+        return self.score
+
+    def add_score(self, a):
+        self.score += a
 
     def display(self, screen):
-        self.draw_text("Level".format(self.show()), 20, 90, self.y, screen)
+        self.draw_text("Score".format(self.show()), 20, 90, self.y, screen)
         self.draw_text("{}".format(self.show()), 20, 90, self.y+40, screen)
