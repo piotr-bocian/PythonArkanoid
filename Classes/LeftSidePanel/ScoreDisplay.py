@@ -1,6 +1,5 @@
-import pygame
 import pygame.freetype
-from Classes.Display import Display
+from Classes.LeftSidePanel.Display import Display
 
 pygame.init()
 
@@ -16,6 +15,7 @@ class ScoreDisplay(Display):
 
     def add_score(self, a):
         self.score += a
+        return self.score
 
     def display(self, screen):
         self.draw_text("Score".format(self.show()), 20, 90, self.y, screen)

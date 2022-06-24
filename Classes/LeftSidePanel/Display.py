@@ -15,4 +15,3 @@ class Display:
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
         screen.blit(text_surface, text_rect)
-

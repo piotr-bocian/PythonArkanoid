@@ -1,6 +1,5 @@
-import pygame
 import pygame.freetype
-from Classes.Display import Display
+from Classes.LeftSidePanel.Display import Display
 
 pygame.init()
 
@@ -16,6 +15,7 @@ class LivesDisplay(Display):
 
     def sub_lives(self):
         self.lives -= 1
+        return self.lives
 
     def display(self, screen):
         self.draw_text("Lives".format(self.show()), 20, 90, self.y, screen)

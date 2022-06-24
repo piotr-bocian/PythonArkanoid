@@ -18,6 +18,7 @@ class PowerUp:
 
     def fall(self):
         self.y += self.speed
+        return self.y
 
     def fallen(self):
         if self.y >= 720:

@@ -1,6 +1,5 @@
-import pygame
 import pygame.freetype
-from Classes.Display import Display
+from Classes.LeftSidePanel.Display import Display
 pygame.init()
 
 
