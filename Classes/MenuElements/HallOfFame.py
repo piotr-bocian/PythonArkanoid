@@ -26,6 +26,7 @@ class HallOfFame:
             self.top.append(hof[-1])
             self.top.append(hof[-2])
             self.top.append(hof[-3])
+        return hof
 
     def draw_hof(self, screen):
         self.find_top()

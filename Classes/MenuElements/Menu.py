@@ -46,6 +46,7 @@ class Menu:
         else:
             self.cursor_center[1] = 270
             self.state = 0
+        return self.state
 
     def move_cursor_up(self):
         if self.cursor_center[1] > 270:
@@ -54,4 +55,4 @@ class Menu:
         else:
             self.cursor_center[1] = 470
             self.state = len(self.state_list) - 1
-        print(self.state)
+        return self.state

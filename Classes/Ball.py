@@ -13,13 +13,12 @@ class Ball:
     def move(self):
         self.x += self.x_speed
         self.y += self.y_speed
-        return [self.x,self.y]
-
+        return [self.x, self.y]
 
     def shoot(self):
-        self.x_speed = random.random()*.5+.2*(-1)**random.randint(0,1)
+        self.x_speed = random.random() * .5 + .2 * (-1) ** random.randint(0, 1)
         self.y_speed = -(1 - self.x_speed ** 2)
-        return [self.x_speed,self.y_speed]
+        return [self.x_speed, self.y_speed]
 
     def follow_paddle(self, paddle):
         self.x = (2 * paddle.x + paddle.width) / 2
@@ -29,9 +28,10 @@ class Ball:
         pygame.draw.circle(screen, (0, 150, 255), (self.x, self.y), self.radius)
 
     def check_hit_paddle(self, paddle):
-        if round(paddle.x) <= round(self.x) <= round(paddle.x) + paddle.width and round(self.y + self.radius) == paddle.y:
-            if paddle.x+paddle.width/3 <= self.x <= paddle.x+2*paddle.width/3:
-                if self.x_speed>=.01 and self.y_speed>=.01:
+        if round(paddle.x) <= round(self.x) <= round(paddle.x) + paddle.width and round(
+                self.y + self.radius) == paddle.y:
+            if paddle.x + paddle.width / 3 <= self.x <= paddle.x + 2 * paddle.width / 3:
+                if self.x_speed >= .01 and self.y_speed >= .01:
                     self.y_speed *= -.9
                     self.x_speed *= .9
                 else:
@@ -41,12 +41,11 @@ class Ball:
                     else:
                         self.x_speed -= .3
             else:
-                if self.x_speed**2+self.y_speed**2 <=1.2:
+                if self.x_speed ** 2 + self.y_speed ** 2 <= 1.2:
                     self.y_speed *= -1.01
                     self.x_speed *= 1.2
                 else:
                     self.shoot()
-            print(self.x_speed, self.y_speed, self.x_speed**2+self.y_speed**2)
 
             return True
         return False
@@ -76,4 +75,3 @@ class Ball:
         if self.y > 720:
             return True
         return False
-

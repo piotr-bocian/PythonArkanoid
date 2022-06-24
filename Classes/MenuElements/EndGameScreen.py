@@ -19,6 +19,7 @@ class EndGameScreen:
     def update(self,score,levels):
         self.score = score
         self.levels = levels
+        return [self.score,self.levels]
 
     def draw_eog(self, screen):
         pygame.draw.line(screen, (255, 255, 255), (400, 80), (880, 80), 3)

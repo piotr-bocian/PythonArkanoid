@@ -28,7 +28,7 @@ class Bricks:
         return [x, y]
 
     def pattern_generator(self):
-        self.pattern = [[None] * 11 for _ in range(1)]
+        self.pattern = [[None] * 11 for _ in range(6)]
         for i in range(len(self.pattern)):
             for j in range(len(self.pattern[i])):
                 x = random.randint(0, 1)
