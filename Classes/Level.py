@@ -130,6 +130,7 @@ class Level:
                     if not self.pause and not self.saved:
                         screen.fill((0, 0, 0))
                         pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(180, 0, 1100, 720), width=2)
+                        self.paddle.update()
                         self.paddle.draw(screen)
                         self.ball.draw(screen)
                         self.bricks.draw(screen)
@@ -179,6 +180,8 @@ class Level:
                             self.paddle.width = 120
                             self.initial = True
                             self.failed = True
+
+
 
                         pygame.display.flip()
 
